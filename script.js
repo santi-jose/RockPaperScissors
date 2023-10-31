@@ -1,23 +1,12 @@
-
-
-
-// test all possible combinations
-// console.log(playRound("ROCK", "rock"));
-// console.log(playRound("ROCK", "paper"));
-// console.log(playRound("ROCK", "scissors"));
-
-// console.log(playRound("PAPER", "rock"));
-// console.log(playRound("PAPER", "paper"));
-// console.log(playRound("PAPER", "scissors"));
-
-// console.log(playRound("SCISSORS", "rock"));
-// console.log(playRound("SCISSORS", "paper"));
-// console.log(playRound("SCISSORS", "scissors"));
-
+// play rock paper scissors
 const game = () => {
     // initialize player and computer scores
     let playerScore = 0;
     let computerScore = 0;
+
+    // functions up here because arrow functions aren't hoisted
+    // functions moved into game function because they need to access
+    // player and computer scores
 
     // getComputerChoice
     // randomly return either Rock, Paper, or Scissors
@@ -90,11 +79,11 @@ const game = () => {
     }
 
     if(playerScore > computerScore){
-        console.log(`Player wins! Player: ${playerScore}, Bot: ${computerScore}`);
+        console.log(`Player wins game! Player: ${playerScore}, Bot: ${computerScore}`);
     }else if(playerScore < computerScore){
-        console.log(`Player loses! Player: ${playerScore}, Bot: ${computerScore}`);
+        console.log(`Player loses game! Player: ${playerScore}, Bot: ${computerScore}`);
     }else{
-        console.log(`Draw! Player: ${playerScore}, Bot: ${computerScore}`);
+        console.log(`Game ends in draw! Player: ${playerScore}, Bot: ${computerScore}`);
     }
 }
 
