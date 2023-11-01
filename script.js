@@ -4,6 +4,9 @@ const game = () => {
     let playerScore = 0;
     let computerScore = 0;
 
+    // initialize round counter
+    let round = 0;
+
     // functions up here because arrow functions aren't hoisted
     // functions moved into game function because they need to access
     // player and computer scores
@@ -35,56 +38,82 @@ const game = () => {
     }
 
     const playRound = (playerSelection, computerSelection) => {
-        playerSelection = playerSelection.toLowerCase(); // set player selection to lower case
-        if (playerSelection === "rock") { // player selected rock
-            if (computerSelection === "rock") { // computer picked rock
-                return "It's a draw! Rock vs Rock"; // player draw
-            } else if (computerSelection === "paper") { // computer picked paper
-                computerScore++; // increment computerScore
-                return "You lose! Paper beats Rock!"; // player loss
-            } else { // computerSelection === scissors; computer picked scissors
-                playerScore++;
-                return "You win! Rock beats Scissors!"; // player win
+        if (playerSelection !== null) { // if we received user input
+
+            playerSelection = playerSelection.toLowerCase(); // set player selection to lower case
+            if (playerSelection === "rock") { // player selected rock
+                // we play a round, so we increment round counter
+                round++;
+
+                if (computerSelection === "rock") { // computer picked rock
+                    return "It's a draw! Rock vs Rock"; // player draw
+                } else if (computerSelection === "paper") { // computer picked paper
+                    computerScore++; // increment computerScore
+                    return "You lose! Paper beats Rock!"; // player loss
+                } else { // computerSelection === scissors; computer picked scissors
+                    playerScore++;
+                    return "You win! Rock beats Scissors!"; // player win
+                }
+            } else if (playerSelection === "paper") { // player selected paper
+                // we play a round, so we increment round counter
+                round++;
+
+                if (computerSelection === "rock") { // computer picked rock
+                    playerScore++;
+                    return "You win! Paper beats Rock!"; // player win
+                } else if (computerSelection === "paper") {  // computer picked paper
+                    return "It's a draw! Paper vs Paper"; // player draw
+                } else { // computerSelection === scissors; computer picked scissors
+                    computerScore++;
+                    return "You lose! Scissors beats Paper!"; // player loss
+                }
+            } else if (playerSelection === "scissors") { // player selected scissors
+                // we play a round, so we increment round counter
+                round++;
+
+                if (computerSelection === "rock") { // computer picked rock
+                    computerScore++;
+                    return "You lose! Rock beats Scissors!"; // player lose
+                } else if (computerSelection === "paper") { // computer picked paper
+                    playerScore++;
+                    return "You win! Scissors beats Paper!"; // player win
+                } else { // computerSelection === scissors; computer picked scissors
+                    return "It's a draw! Scissors vs Scissors"; // player draw
+                }
+            } else { // input was invalid
+                return "Invalid input! Enter a playable hand!";
             }
-        } else if (playerSelection === "paper") { // player selected paper
-            if (computerSelection === "rock") { // computer picked rock
-                playerScore++;
-                return "You win! Paper beats Rock!"; // player win
-            } else if (computerSelection === "paper") {  // computer picked paper
-                return "It's a draw! Paper vs Paper"; // player draw
-            } else { // computerSelection === scissors; computer picked scissors
-                computerScore++;
-                return "You lose! Scissors beats Paper!"; // player loss
-            }
-        } else if (playerSelection === "scissors") { // player selected scissors
-            if (computerSelection === "rock") { // computer picked rock
-                computerScore++;
-                return "You lose! Rock beats Scissors!"; // player lose
-            } else if (computerSelection === "paper") { // computer picked paper
-                playerScore++;
-                return "You win! Scissors beats Paper!"; // player win
-            } else { // computerSelection === scissors; computer picked scissors
-                return "It's a draw! Scissors vs Scissors"; // player draw
-            }
-        } else { // input was invalid
-            return "Invalid input!";
+        } else { // playerSelection === null
+            return "No hand played! Enter a playable hand!";
         }
 
     }
 
     // play 5 rounds
-    for (let i = 0; i < 5; i++) {
-        console.log(playRound(prompt("Enter your hand!"), getComputerChoice()));
-        console.log(`playerScore: ${playerScore}, computerScore: ${computerScore}`);
+    while ((playerScore < 3) && (computerScore < 3)) {
+        // call playRound with prompt() as userSelection and getComputerChoice for computerSelection
+        const result = playRound(prompt("Enter your hand!"), getComputerChoice());
+        console.log(result);
+        alert(result);
+
+        console.log(`Round ${round}: 
+        playerScore: ${playerScore}, computerScore: ${computerScore}`);
+        alert(`Round: ${round}: 
+        playerScore: ${playerScore}, computerScore: ${computerScore}`);
     }
 
-    if(playerScore > computerScore){
-        console.log(`Player wins game! Player: ${playerScore}, Bot: ${computerScore}`);
-    }else if(playerScore < computerScore){
-        console.log(`Player loses game! Player: ${playerScore}, Bot: ${computerScore}`);
-    }else{
-        console.log(`Game ends in draw! Player: ${playerScore}, Bot: ${computerScore}`);
+    if (playerScore > computerScore) {
+        console.log(`Player wins game! Player: ${playerScore}, Computer: ${computerScore}`);
+        alert(`Player wins game! Player: ${playerScore}, Computer: ${computerScore}`);
+    } else if (playerScore < computerScore) {
+        console.log(`Player loses game! Player: ${playerScore}, Computer: ${computerScore}`);
+        alert(`Player loses game! Player: ${playerScore}, Computer: ${computerScore}`);
+    } else {
+        console.log(`Game ends in draw! Player: ${playerScore}, Computer: ${computerScore}`);
+        alert(`Game ends in draw! Player: ${playerScore}, Computer: ${computerScore}`);
     }
 }
 
-game();
+// tie button in html to game
+const button = document.querySelector("button");
+button.addEventListener("click", game);
