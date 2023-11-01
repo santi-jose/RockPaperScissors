@@ -46,13 +46,13 @@ const game = () => {
                 round++;
 
                 if (computerSelection === "rock") { // computer picked rock
-                    return "It's a draw! Rock vs Rock"; // player draw
+                    return "It's a draw! Computer chose Rock. You chose Rock. Rock vs Rock"; // player draw
                 } else if (computerSelection === "paper") { // computer picked paper
                     computerScore++; // increment computerScore
-                    return "You lose! Paper beats Rock!"; // player loss
+                    return "You lose! Computer chose Paper. You chose Rock. Paper beats Rock!"; // player loss
                 } else { // computerSelection === scissors; computer picked scissors
                     playerScore++;
-                    return "You win! Rock beats Scissors!"; // player win
+                    return "You win! Computer chose Scissors. You chose Rock. Rock beats Scissors!"; // player win
                 }
             } else if (playerSelection === "paper") { // player selected paper
                 // we play a round, so we increment round counter
@@ -60,12 +60,12 @@ const game = () => {
 
                 if (computerSelection === "rock") { // computer picked rock
                     playerScore++;
-                    return "You win! Paper beats Rock!"; // player win
+                    return "You win! Computer chose Rock. You chose Paper. Paper beats Rock!"; // player win
                 } else if (computerSelection === "paper") {  // computer picked paper
-                    return "It's a draw! Paper vs Paper"; // player draw
+                    return "It's a draw! Computer chose Paper. You chose Paper. Paper vs Paper"; // player draw
                 } else { // computerSelection === scissors; computer picked scissors
                     computerScore++;
-                    return "You lose! Scissors beats Paper!"; // player loss
+                    return "You lose! Computer chose Scissors. You chose Paper. Scissors beats Paper!"; // player loss
                 }
             } else if (playerSelection === "scissors") { // player selected scissors
                 // we play a round, so we increment round counter
@@ -73,17 +73,17 @@ const game = () => {
 
                 if (computerSelection === "rock") { // computer picked rock
                     computerScore++;
-                    return "You lose! Rock beats Scissors!"; // player lose
+                    return "You lose! Computer chose Rock. You chose Scissors. Rock beats Scissors!"; // player lose
                 } else if (computerSelection === "paper") { // computer picked paper
                     playerScore++;
-                    return "You win! Scissors beats Paper!"; // player win
+                    return "You win! Computer chose Paper. You chose Scissors. Scissors beats Paper!"; // player win
                 } else { // computerSelection === scissors; computer picked scissors
-                    return "It's a draw! Scissors vs Scissors"; // player draw
+                    return "It's a draw! Computer chose Scissors. You chose Scissors. Scissors vs Scissors"; // player draw
                 }
             } else { // input was invalid
                 return "Invalid input! Enter a playable hand!";
             }
-        } else { // playerSelection === null
+        } else { // playerSelection === null. (No input)
             return "No hand played! Enter a playable hand!";
         }
 
