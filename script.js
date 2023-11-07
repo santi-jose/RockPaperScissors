@@ -1,4 +1,17 @@
 // play rock paper scissors
+
+// global variables tracking elements in index.html
+
+// get div to post results of each round
+const resultDiv = document.querySelector("#resultDiv");
+
+// get button elements from index.html
+const rockButton = document.querySelector("#rockButton");
+const paperButton = document.querySelector("#paperButton");
+const scissorsButton = document.querySelector("#scissorsButton");
+
+// global variables tracking game state
+
 // initialize player and computer scores
 let playerScore = 0;
 let computerScore = 0;
@@ -7,8 +20,6 @@ let computerScore = 0;
 let round = 0;
 
 // functions up here because arrow functions aren't hoisted
-// functions moved into game function because they need to access
-// player and computer scores
 
 // getComputerChoice
 // randomly return either Rock, Paper, or Scissors
@@ -36,6 +47,26 @@ const getComputerChoice = () => {
     }
 }
 
+// resetGame
+// this function resets all initial variables necessary to keep track
+// of game state to their initial values. It also clears the resultDiv
+// so that it is blank to rewrite into for the new game. 
+const resetGame = () => {
+    playerScore = 0;
+    computerScore = 0;
+    round = 0;
+
+    // clear out the resultDiv
+    let pRound = resultDiv.lastElementChild; // get last child in resultDiv
+    while (pRound) { // while we have a valid node
+        resultDiv.removeChild(pRound); // remove pRound, paragraph round
+        pRound = resultDiv.lastElementChild; // get new last child in resultDiv
+    }
+}
+
+// playRound function plays a round of rock paper scissors given 
+// playerSelection and computerSelection arguments. Returns a string
+// which determines how the round plays out. 
 const playRound = (playerSelection, computerSelection) => {
     if (playerSelection !== null) { // if we received user input
 
@@ -88,43 +119,103 @@ const playRound = (playerSelection, computerSelection) => {
 
 }
 
-// play 5 rounds
-// while ((playerScore < 3) && (computerScore < 3)) {
-//     console.log(`Round ${round}: 
-//         playerScore: ${playerScore}, computerScore: ${computerScore}`);
-// }
-
-// if (playerScore > computerScore) {
-//     console.log(`Player wins game! Player: ${playerScore}, Computer: ${computerScore}`);
-//     alert(`Player wins game! Player: ${playerScore}, Computer: ${computerScore}`);
-// } else if (playerScore < computerScore) {
-//     console.log(`Player loses game! Player: ${playerScore}, Computer: ${computerScore}`);
-//     alert(`Player loses game! Player: ${playerScore}, Computer: ${computerScore}`);
-// } else {
-//     console.log(`Game ends in draw! Player: ${playerScore}, Computer: ${computerScore}`);
-//     alert(`Game ends in draw! Player: ${playerScore}, Computer: ${computerScore}`);
-// }
-
-// tie button in html to game
-const rockButton = document.querySelector("#rockButton");
-const paperButton = document.querySelector("#paperButton");
-const scissorsButton = document.querySelector("#scissorsButton");
-
-rockButton.addEventListener("click", function(){
-    const result = playRound("rock", getComputerChoice());
-    console.log(result);
-    console.log(`Round ${round}: 
+// event listener for rock button
+rockButton.addEventListener("click", function () {
+    if ((playerScore === 5) || (computerScore === 5)) {
+        alert("Starting new game!");
+        resetGame();
+    } else {
+        const result = playRound("rock", getComputerChoice());
+        console.log(result);
+        console.log(`Round ${round}: 
     playerScore: ${playerScore}, Computer: ${computerScore}`);
+
+        const p = document.createElement("p");
+        p.innerText = result + `
+    Round ${round}: 
+    playerScore: ${playerScore}, Computer: ${computerScore}`;
+        resultDiv.appendChild(p);
+
+        if ((playerScore === 5) || (computerScore === 5)) {
+            const gameResult = document.createElement("p");
+            if (playerScore === 5) {
+                gameResult.innerText = `Game over!
+            You win! 
+            playerScore: ${playerScore}, computerScore: ${computerScore}`;
+            } else { // computerScore == 5
+                gameResult.innerText = `Game over!
+            You lose!
+            playerScore: ${playerScore}, computerScore: ${computerScore}`;
+            }
+            resultDiv.append(gameResult);
+        }
+    }
 });
-paperButton.addEventListener("click", function(){
-    const result = playRound("paper", getComputerChoice());
-    console.log(result);
-    console.log(`Round ${round}: 
+
+// event listener for paper button
+paperButton.addEventListener("click", function () {
+    if (playerScore === 5 || computerScore === 5) {
+        alert("Starting new game!");
+        resetGame();
+    } else {
+        const result = playRound("paper", getComputerChoice());
+        console.log(result);
+        console.log(`Round ${round}: 
     playerScore: ${playerScore}, Computer: ${computerScore}`);
+
+        // create new paragraph element describing round results in html
+        const p = document.createElement("p");
+        p.innerText = result + `
+    Round ${round}: 
+    playerScore: ${playerScore}, Computer: ${computerScore}`;
+        resultDiv.appendChild(p); // append new paragraph element
+
+        // if either our playerScore or computerScore reach 5
+        if ((playerScore === 5) || (computerScore === 5)) {
+            const gameResult = document.createElement("p");
+            if (playerScore === 5) {
+                gameResult.innerText = `Game over!
+            You win! 
+            playerScore: ${playerScore}, computerScore: ${computerScore}`;
+            } else { // computerScore == 5
+                gameResult.innerText = `Game over!
+            You lose!
+            playerScore: ${playerScore}, computerScore: ${computerScore}`;
+            }
+            resultDiv.append(gameResult);
+        }
+    }
 });
-scissorsButton.addEventListener("click", function(){
-    const result = playRound("scissors", getComputerChoice());
-    console.log(result);
-    console.log(`Round ${round}: 
+
+// event listener for scissors button
+scissorsButton.addEventListener("click", function () {
+    if ((playerScore === 5) || (computerScore === 5)) {
+        alert("Starting new game!"); // alert user they are starting a new game
+        resetGame(); // reset game if we have 
+    } else {
+        const result = playRound("scissors", getComputerChoice());
+        console.log(result);
+        console.log(`Round ${round}: 
     playerScore: ${playerScore}, Computer: ${computerScore}`);
+
+        const p = document.createElement("p");
+        p.innerText = result + `
+    Round ${round}: 
+    playerScore: ${playerScore}, Computer: ${computerScore}`;
+        resultDiv.appendChild(p);
+
+        if ((playerScore === 5) || (computerScore === 5)) {
+            const gameResult = document.createElement("p");
+            if (playerScore === 5) {
+                gameResult.innerText = `Game over!
+            You win! 
+            playerScore: ${playerScore}, computerScore: ${computerScore}`;
+            } else { // computerScore == 5
+                gameResult.innerText = `Game over!
+            You lose!
+            playerScore: ${playerScore}, computerScore: ${computerScore}`;
+            }
+            resultDiv.append(gameResult);
+        }
+    }
 });
